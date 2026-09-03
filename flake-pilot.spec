@@ -1,11 +1,11 @@
 Name:           flake-pilot
-Version:        0.3.0
+Version:        0.1.0
 Release:        1%{?dist}
 Summary:        Launcher for execution of applications inside containers and VMs
 
 License:        MIT
 URL:            https://github.com/OSInside/flake-pilot
-Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/flake-pilot-%{version}.tar.gz
+Source0:        %{url}/archive/refs/heads/main.tar.gz#/flake-pilot-main.tar.gz
 Source1:        flake-pilot-vendor.tar.gz
 
 ExclusiveArch:  %{rust_arches}
@@ -17,11 +17,12 @@ Recommends:     podman
 Suggests:       firecracker
 
 %description
-Flake Pilot is a registration and execution utility for applications launched
-through runtime engines like Podman containers or Firecracker MicroVMs.
+Flake Pilot provides an application launcher and registration utility for
+applications executed inside isolated runtime environments such as OCI
+containers or Firecracker MicroVMs.
 
 %prep
-%autosetup -n flake-pilot-%{version} -a1
+%autosetup -n flake-pilot-main -a1
 %cargo_prep -v vendor
 
 %build
