@@ -1,6 +1,6 @@
 Name:           flake-pilot
 Version:        0.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Launcher for execution of applications inside containers and VMs
 
 License:        MIT
@@ -27,7 +27,6 @@ containers or Firecracker MicroVMs.
 %prep
 %autosetup -n flake-pilot-main -a1
 %cargo_prep -v vendor
-# Ensure documentation step passes even if README is missing or renamed
 test -f README.md || touch README.md
 
 %build
@@ -45,6 +44,9 @@ install -D -p -m 0755 target/rpm/sci %{buildroot}%{_bindir}/sci
 install -d -m 0755 %{buildroot}%{_sysconfdir}/flakes
 install -d -m 0755 %{buildroot}%{_datadir}/flakes
 
+# Install configuration templates required by flake-ctl
+install -p -m 0644 flake-ctl/template/*.yaml %{buildroot}%{_sysconfdir}/flakes/
+
 %check
 %cargo_test -- -- --skip integration
 
@@ -52,6 +54,7 @@ install -d -m 0755 %{buildroot}%{_datadir}/flakes
 %license LICENSE cargo-vendor.txt
 %doc README*
 %dir %{_sysconfdir}/flakes
+%config(noreplace) %{_sysconfdir}/flakes/*.yaml
 %dir %{_datadir}/flakes
 %{_bindir}/flake-ctl
 %{_bindir}/podman-pilot
@@ -59,5 +62,7 @@ install -d -m 0755 %{buildroot}%{_datadir}/flakes
 %{_bindir}/sci
 
 %changelog
+* Thu Sep 03 2026 COPR Package Maintainer <user@fedoraproject.org> - 0.1.0-2
+- Package configuration templates into /etc/flakes/
 * Thu Sep 03 2026 COPR Package Maintainer <user@fedoraproject.org> - 0.1.0-1
 - Initial COPR package build for flake-pilot
