@@ -13,6 +13,9 @@ ExclusiveArch:  %{rust_arches}
 BuildRequires:  cargo-rpm-macros >= 25
 BuildRequires:  gcc
 
+Recommends:     podman
+Suggests:       firecracker
+
 %description
 Flake Pilot is a registration and execution utility for applications launched
 through runtime engines like Podman containers or Firecracker MicroVMs.
