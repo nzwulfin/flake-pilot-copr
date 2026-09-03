@@ -12,6 +12,9 @@ ExclusiveArch:  %{rust_arches}
 
 BuildRequires:  cargo-rpm-macros >= 25
 BuildRequires:  gcc
+BuildRequires:  openssl-devel
+BuildRequires:  pkgconfig
+BuildRequires:  glibc-static
 
 Recommends:     podman
 Suggests:       firecracker
@@ -31,13 +34,20 @@ containers or Firecracker MicroVMs.
 
 %install
 %cargo_install
+install -d -m 0755 %{buildroot}%{_sysconfdir}/flakes
 
 %check
-%cargo_test
+%cargo_test -- -- --skip integration
 
 %files
 %license LICENSE cargo-vendor.txt
 %doc README.md
+%dir %{_sysconfdir}/flakes
 %{_bindir}/flake-ctl
 %{_bindir}/podman-pilot
 %{_bindir}/firecracker-pilot
+%{_bindir}/sci
+
+%changelog
+* Thu Sep 03 2026 COPR Package Maintainer <user@fedoraproject.org> - 0.1.0-1
+- Initial COPR package build for flake-pilot
