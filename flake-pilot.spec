@@ -8,7 +8,7 @@ URL:            https://github.com/OSInside/flake-pilot
 Source0:        %{url}/archive/refs/heads/main.tar.gz#/flake-pilot-main.tar.gz
 Source1:        flake-pilot-vendor.tar.gz
 
-ExclusiveArch:  %{rust_arches}
+ExclusiveArch:  x86_64
 
 BuildRequires:  cargo-rpm-macros >= 25
 BuildRequires:  gcc
@@ -33,8 +33,15 @@ containers or Firecracker MicroVMs.
 %cargo_vendor_manifest
 
 %install
-%cargo_install
+# Manual binary installation required for Cargo virtual workspaces
+install -D -p -m 0755 target/rpm/flake-ctl %{buildroot}%{_bindir}/flake-ctl
+install -D -p -m 0755 target/rpm/podman-pilot %{buildroot}%{_bindir}/podman-pilot
+install -D -p -m 0755 target/rpm/firecracker-pilot %{buildroot}%{_bindir}/firecracker-pilot
+install -D -p -m 0755 target/rpm/sci %{buildroot}%{_bindir}/sci
+
+# System configuration and data directories
 install -d -m 0755 %{buildroot}%{_sysconfdir}/flakes
+install -d -m 0755 %{buildroot}%{_datadir}/flakes
 
 %check
 %cargo_test -- -- --skip integration
@@ -43,6 +50,7 @@ install -d -m 0755 %{buildroot}%{_sysconfdir}/flakes
 %license LICENSE cargo-vendor.txt
 %doc README.md
 %dir %{_sysconfdir}/flakes
+%dir %{_datadir}/flakes
 %{_bindir}/flake-ctl
 %{_bindir}/podman-pilot
 %{_bindir}/firecracker-pilot
