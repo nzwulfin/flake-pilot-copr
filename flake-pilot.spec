@@ -1,6 +1,6 @@
 Name:           flake-pilot
-Version:        0.1.0
-Release:        2%{?dist}
+Version:        3.1.53
+Release:        1%{?dist}
 Summary:        Launcher for execution of applications inside containers and VMs
 
 License:        MIT
