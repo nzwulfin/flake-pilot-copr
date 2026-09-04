@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/)flake-pilot\\.spec$/"
+      ],
+      "matchStrings": [
+        "Version:\\s+(?<currentValue>[^\\s]+)\\nRelease:\\s+[^\\s]+"
+      ],
+      "autoReplaceStringTemplate": "Version:        {{{newValue}}}\nRelease:        1%{?dist}",
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "OSInside/flake-pilot",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    }
+  ]
+}
