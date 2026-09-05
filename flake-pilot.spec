@@ -1,5 +1,5 @@
 Name:           flake-pilot
-Version:        3.1.53
+Version:        3.1.55
 Release:        1%{?dist}
 Summary:        Launcher for execution of applications inside containers and VMs
 
