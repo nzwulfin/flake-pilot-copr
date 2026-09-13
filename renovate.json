@@ -15,5 +15,12 @@
       "depNameTemplate": "OSInside/flake-pilot",
       "extractVersionTemplate": "^v?(?<version>.+)$"
     }
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    }
   ]
 }
