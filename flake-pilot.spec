@@ -1,6 +1,6 @@
 Name:           flake-pilot
 Version:        3.2.22
-Release:        1%{?dist}
+Release:        %autorelease
 Summary:        Launcher for execution of applications inside containers and VMs
 
 License:        MIT
@@ -15,6 +15,7 @@ BuildRequires:  gcc
 BuildRequires:  openssl-devel
 BuildRequires:  pkgconfig
 BuildRequires:  glibc-static
+BuildRequires:  systemd-rpm-macros
 
 Recommends:     podman
 Suggests:       firecracker
@@ -43,6 +44,7 @@ install -D -p -m 0755 target/rpm/sci %{buildroot}%{_bindir}/sci
 # System configuration and data directories
 install -d -m 0755 %{buildroot}%{_sysconfdir}/flakes
 install -d -m 0755 %{buildroot}%{_datadir}/flakes
+install -D -p -m 0644 package/systemd-tmpfiles-flake-pilot.conf %{buildroot}%{_tmpfilesdir}/flake-pilot.conf
 
 # Install configuration templates required by flake-ctl
 install -p -m 0644 flake-ctl/template/*.yaml %{buildroot}%{_sysconfdir}/flakes/
@@ -60,6 +62,7 @@ install -p -m 0644 flake-ctl/template/*.yaml %{buildroot}%{_sysconfdir}/flakes/
 %{_bindir}/podman-pilot
 %{_bindir}/firecracker-pilot
 %{_bindir}/sci
+%{_tmpfilesdir}/flake-pilot.conf
 
 %changelog
 %autochangelog

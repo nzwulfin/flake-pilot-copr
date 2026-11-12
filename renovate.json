@@ -8,9 +8,9 @@
         "/(^|/)flake-pilot\\.spec$/"
       ],
       "matchStrings": [
-        "Version:\\s+(?<currentValue>[^\\s]+)\\nRelease:\\s+[^\\s]+"
+        "Version:\\s+(?<currentValue>[^\\s]+)"
       ],
-      "autoReplaceStringTemplate": "Version:        {{{newValue}}}\nRelease:        1%{?dist}",
+      "autoReplaceStringTemplate": "Version:        {{{newValue}}}",
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "OSInside/flake-pilot",
       "extractVersionTemplate": "^v?(?<version>.+)$"
